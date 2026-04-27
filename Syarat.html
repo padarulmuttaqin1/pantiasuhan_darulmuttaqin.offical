@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pendaftaran - Panti Asuhan Darul Muttaqin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* 1. TEMA WARNA BIRU & PUTIH */
+    :root {
+      --primary: #1e3a8a;      
+      --secondary: #3b82f6;    
+      --bg-white: #ffffff;     
+      --bg-light: #f8fbff;     
+      --text-main: #0f172a;    
+      --text-muted: #64748b;   
+      --border: #e2e8f0;
+    }
+
+    body.dark-mode {
+      --bg-white: #0f172a;     
+      --bg-light: #020617;     
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      line-height: 1.6;
+    }
+
+    /* 2. FLOATING CONTROLS */
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-back {
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+      transition: 0.3s;
+    }
+
+    .btn-theme {
+      background: var(--bg-white);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+
+    .btn-back:hover { background: var(--secondary); transform: translateX(5px); }
+
+    /* 3. HERO SECTION */
+    .hero-pendaftaran {
+      padding: 120px 5% 100px;
+      text-align: center;
+      background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.85)), url('bg-panti.jpg') center/cover;
+      color: white;
+      border-radius: 0 0 50px 50px;
+    }
+
+    .hero-pendaftaran h1 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; }
+    .hero-pendaftaran p { max-width: 650px; margin: 0 auto; opacity: 0.9; }
+
+    /* 4. CONTENT AREA */
+    .container {
+      max-width: 900px;
+      margin: -60px auto 60px;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: var(--bg-white);
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2 i { color: var(--secondary); }
+
+    .list {
+      margin-bottom: 40px;
+      list-style: none;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 15px;
+      color: var(--text-main);
+    }
+
+    .list li::before {
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+    }
+
+    /* CONTACT INFO */
+    .info-box {
+      background: var(--bg-light);
+      padding: 25px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      border: 1px solid var(--border);
+    }
+
+    .info-box p {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 40px;
+      background: #22c55e;
+      color: white;
+      text-decoration: none;
+      border-radius: 15px;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: 0.3s;
+      box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .btn-wa:hover {
+      background: #16a34a;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4);
+    }
+
+    /* 5. FOOTER */
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-pendaftaran h1 { font-size: 2.2rem; }
+      .card { padding: 30px 20px; }
+      .controls { width: calc(100% - 40px); justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <a href="index.html" class="btn-back">
+      <i class="fas fa-arrow-left"></i> KEMBALI
+    </a>
+    <button class="btn-theme" onclick="toggleDarkMode()">
+      <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+  </div>
+
+  <section class="hero-pendaftaran">
+    <h1>Pendaftaran Anak Asuh</h1>
+    <p>Bergabunglah bersama keluarga besar Panti Asuhan Darul Muttaqin Pasuruan untuk masa depan yang lebih cerah.</p>
+  </section>
+
+  <div class="container">
+    <div class="card">
+      <h2><i class="fas fa-clipboard-check"></i> Syarat Pendaftaran</h2>
+      <ul class="list">
+        <li>Anak laki-laki usia 9 tahun - 16 tahun (SD - SMK)</li>
+        <li>Berkemauan kuat untuk belajar dan menerima pendidikan</li>
+        <li>Mendapat izin resmi dari orang tua atau wali</li>
+        <li>Bersedia tinggal di asrama dan mematuhi peraturan yang berlaku</li>
+        <li>Surat keterangan tidak mampu dari pihak berwenang</li>
+        <li>Fotokopi Akte Kelahiran dan Kartu Keluarga</li>
+        <li>Ijazah, SKHU, dan Rapor terakhir</li>
+        <li>Foto berwarna ukuran 3x4</li>
+      </ul>
+
+      <h2><i class="fas fa-graduation-cap"></i> Fasilitas yang Didapatkan</h2>
+      <ul class="list">
+        <li>Tempat tinggal asrama yang aman dan nyaman (Gratis)</li>
+        <li>Biaya pendidikan formal penuh hingga SMK</li>
+        <li>Seragam, alat tulis, dan perlengkapan sekolah lainnya</li>
+        <li>Jaminan makan 3x sehari dengan menu bergizi</li>
+        <li>Bimbingan rohani, tahfidz Al-Qur'an, dan uang saku bulanan</li>
+      </ul>
+
+      <div class="info-box">
+        <p><i class="fas fa-map-marker-alt" style="color: var(--secondary);"></i> Jl. Raya Tambakrejo No.4, Kraton, Pasuruan</p>
+      </div>
+
+      <a href="https://wa.me/6282245185893" class="btn-wa" target="_blank">
+        <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp Sekarang
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <div style="font-weight: 800; margin-bottom: 10px;">DARUL MUTTAQIN</div>
+    <p style="opacity: 0.6; font-size: 13px;">&copy; 2026 Panti Asuhan Darul Muttaqin Pasuruan. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      const icon = document.getElementById('themeIcon');
+      body.classList.toggle('dark-mode');
+      
+      if(body.classList.contains('dark-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+    }
+  </script>
+
+</body>
+</html>

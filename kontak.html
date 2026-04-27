@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hubungi Kami - Panti Asuhan Darul Muttaqin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* 1. TEMA WARNA BIRU & PUTIH */
+    :root {
+      --primary: #1e3a8a;      
+      --secondary: #3b82f6;    
+      --bg-white: #ffffff;     
+      --bg-light: #f8fbff;     
+      --text-main: #0f172a;    
+      --text-muted: #64748b;   
+      --border: #e2e8f0;
+    }
+
+    body.dark-mode {
+      --bg-white: #0f172a;     
+      --bg-light: #020617;     
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 2. FLOATING CONTROLS (TOMBOL KEMBALI & TEMA) */
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-back {
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+      transition: 0.3s;
+    }
+
+    .btn-theme {
+      background: var(--bg-white);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+
+    .btn-back:hover { background: var(--secondary); transform: translateX(5px); }
+
+    /* 3. HERO HUBUNGI KAMI */
+    .hero-contact {
+      padding: 120px 5% 100px;
+      text-align: center;
+      background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.85)), url('bg-panti.jpg') center/cover;
+      color: white;
+      border-radius: 0 0 50px 50px;
+    }
+
+    .hero-contact h1 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; }
+    .hero-contact p { max-width: 600px; margin: 0 auto; opacity: 0.9; line-height: 1.6; }
+
+    /* 4. CONTACT CARDS AREA */
+    .wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 60px 20px;
+      margin-top: -80px; /* Menumpuk sedikit ke Hero */
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      background: var(--bg-white);
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      background: var(--bg-light);
+      border-radius: 20px;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid transparent;
+      transition: 0.3s;
+    }
+
+    .contact-card:hover {
+      transform: translateX(10px);
+      border-color: var(--secondary);
+      background: var(--bg-white);
+      box-shadow: 0 10px 20px rgba(30, 58, 138, 0.05);
+    }
+
+    .contact-card i {
+      font-size: 20px;
+      color: white;
+      background: var(--primary);
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .text-box { display: flex; flex-direction: column; }
+    .label { font-size: 11px; font-weight: 800; color: var(--secondary); text-transform: uppercase; }
+    .value { font-size: 16px; font-weight: 700; color: var(--text-main); }
+
+    /* 5. FOOTER */
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .social-btns { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
+    .social-btns a { 
+      color: var(--primary); background: white; 
+      width: 45px; height: 45px; border-radius: 12px; 
+      display: flex; align-items: center; justify-content: center; 
+      text-decoration: none; font-size: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero-contact h1 { font-size: 2.2rem; }
+      .container { padding: 30px 20px; }
+      .controls { width: calc(100% - 40px); justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <a href="index.html" class="btn-back">
+      <i class="fas fa-arrow-left"></i> KEMBALI
+    </a>
+    <button class="btn-theme" onclick="toggleDarkMode()">
+      <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+  </div>
+
+  <section class="hero-contact">
+    <h1>Hubungi Kami</h1>
+    <p>Kami siap melayani informasi dan bantuan terkait donasi, pendaftaran, atau kunjungan ke panti.</p>
+  </section>
+
+  <div class="wrapper">
+    <div class="container">
+      <div class="contact-list">
+        <a href="https://instagram.com/pa_darulmuttaqin" target="_blank" class="contact-card">
+          <i class="fab fa-instagram"></i>
+          <div class="text-box">
+            <span class="label">Instagram</span>
+            <span class="value">@pa_darulmuttaqin</span>
+          </div>
+        </a>
+
+        <a href="tel:(0343)428564" class="contact-card">
+          <i class="fas fa-phone-alt"></i>
+          <div class="text-box">
+            <span class="label">Telepon Kantor</span>
+            <span class="value">(0343) 428564</span>
+          </div>
+        </a>
+
+        <div class="contact-card">
+          <i class="fas fa-map-marker-alt"></i>
+          <div class="text-box">
+            <span class="label">Alamat</span>
+            <span class="value">Jl. Raya Tambak Rejo No.04, Pasuruan</span>
+          </div>
+        </div>
+
+        <a href="https://wa.me/6282245185893" target="_blank" class="contact-card" style="border-left: 5px solid #22c55e;">
+          <i class="fab fa-whatsapp" style="background: #22c55e;"></i>
+          <div class="text-box">
+            <span class="label" style="color: #22c55e;">WhatsApp Resmi</span>
+            <span class="value">Klik Chat Sekarang</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div style="font-weight: 800; margin-bottom: 10px;">DARUL MUTTAQIN</div>
+    <p style="opacity: 0.6; font-size: 13px;">&copy; 2026 Panti Asuhan Darul Muttaqin Pasuruan.</p>
+    <div class="social-btns">
+      <a href="https://instagram.com/pa_darulmuttaqin"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/6282245185893"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      const icon = document.getElementById('themeIcon');
+      body.classList.toggle('dark-mode');
+      
+      if(body.classList.contains('dark-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+    }
+  </script>
+
+</body>
+</html>
