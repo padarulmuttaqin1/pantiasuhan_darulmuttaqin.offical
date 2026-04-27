@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* 1. TEMA WARNA BIRU CERAH & PUTIH (IDENTIK) */
+    /* 1. TEMA WARNA */
     :root {
       --primary-blue: #3b82f6;    
       --light-blue: #60a5fa;      
@@ -15,7 +15,6 @@
       --bg-white: #ffffff;
       --text-main: #1e293b;
       --text-muted: #64748b;
-      --sidebar-w: 280px;
       --border: #e2e8f0;
     }
 
@@ -27,177 +26,216 @@
       --border: #1e293b;
     }
 
-    * { box-sizing: border-box; scroll-behavior: smooth; }
+    * { box-sizing: border-box; scroll-behavior: smooth; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--sky-blue);
       color: var(--text-main);
-      padding-left: var(--sidebar-w);
       transition: all 0.4s ease;
+      padding-top: 80px; /* Jarak agar konten tidak tertutup navbar */
     }
 
-    body.sidebar-closed { padding-left: 0; }
-
-    /* 2. SIDEBAR */
-    .sidebar {
-      width: var(--sidebar-w);
-      height: 100vh;
+    /* 2. TOP NAVBAR FIXED */
+    .navbar {
       position: fixed;
-      left: 0;
       top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
       background: var(--bg-white);
-      padding: 40px 0;
-      z-index: 1000;
-      border-right: 1px solid var(--border);
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8%;
+      z-index: 2000;
+      border-bottom: 1px solid var(--border);
+      transition: 0.3s;
     }
 
-    body.sidebar-closed .sidebar { transform: translateX(-100%); }
+    .nav-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
 
-    .nav-header { text-align: center; margin-bottom: 40px; padding: 0 20px; }
-    .nav-logo { width: 100px; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(59, 130, 246, 0.2)); }
-    .nav-title { font-size: 0.9rem; font-weight: 800; color: var(--primary-blue); letter-spacing: 1px; }
+    .nav-logo-group img { height: 45px; }
+    .nav-logo-group span { 
+      font-weight: 800; 
+      color: var(--primary-blue); 
+      font-size: 1.1rem; 
+      letter-spacing: 0.5px;
+    }
 
-    .sidebar-menu { display: flex; flex-direction: column; }
-    .sidebar-menu a {
+    /* MENU DESKTOP */
+    .nav-menu {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-link {
       text-decoration: none;
       color: var(--text-muted);
       font-weight: 700;
       font-size: 0.85rem;
-      padding: 18px 30px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
+      padding: 10px 18px;
+      border-radius: 10px;
       transition: 0.3s;
     }
 
-    .sidebar-menu a i { width: 20px; text-align: center; color: var(--primary-blue); }
-    .sidebar-menu a:hover, .sidebar-menu a.active {
+    .nav-link:hover, .nav-link.active {
       color: var(--primary-blue);
       background: #eff6ff;
-      box-shadow: inset 4px 0 0 var(--primary-blue);
     }
 
-    /* 3. CONTROLS */
-    .controls { position: fixed; top: 20px; left: 20px; z-index: 1100; display: flex; gap: 10px; }
-    .btn-action {
-      background: var(--primary-blue); color: white; border: none;
-      width: 46px; height: 46px; border-radius: 12px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    /* TOMBOL MODE GELAP DI NAV */
+    .btn-mode {
+      background: var(--sky-blue);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: var(--primary-blue);
+      font-size: 1rem;
     }
 
-    /* 4. HERO SECTION */
+    /* TOMBOL MOBILE (HAMBURGER) */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--primary-blue);
+      cursor: pointer;
+    }
+
+    /* 3. HERO SECTION */
     .hero {
-      padding: 100px 8% 120px;
+      padding: 80px 8% 100px;
       text-align: center;
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(96, 165, 250, 0.8)), url('bg-panti.jpg') center/cover;
       color: white;
       border-radius: 0 0 50px 50px;
     }
 
-    /* 5. PERBAIKAN CAROUSEL (GESER OTOMATIS TANPA EROR) */
-    .galeri-container {
-      padding: 60px 0;
-      overflow: hidden; /* Memotong gambar yang di luar layar */
-      position: relative;
-    }
+    .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 20px; }
+    .hero p { max-width: 700px; margin: 0 auto; opacity: 0.95; line-height: 1.7; }
 
+    /* 4. CAROUSEL AUTO-SCROLL */
+    .galeri-container { padding: 60px 0; overflow: hidden; }
     .carousel-track {
       display: flex;
-      width: calc(350px * 12); /* Lebar total: (lebar gambar + gap) x jumlah total gambar */
+      width: calc(350px * 12);
       gap: 20px;
-      animation: geserOtomatis 30s linear infinite; /* Animasi mulus */
+      animation: geserOtomatis 30s linear infinite;
     }
-
-    /* Berhenti saat kursor di atas gambar */
-    .carousel-track:hover { animation-play-state: paused; }
-
     .carousel-track img {
-      width: 350px;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 20px;
-      border: 5px solid var(--bg-white);
+      width: 320px; height: 220px; object-fit: cover;
+      border-radius: 20px; border: 4px solid var(--bg-white);
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-      flex-shrink: 0; /* Mencegah gambar menyusut */
     }
-
-    /* KEYFRAMES UNTUK GESER MULUS */
     @keyframes geserOtomatis {
       0% { transform: translateX(0); }
-      100% { transform: translateX(calc(-350px * 6 - 120px)); } /* Geser sejauh 6 gambar + total gap */
+      100% { transform: translateX(calc(-350px * 6)); }
     }
 
-    /* 6. FOOTER */
+    /* 5. FOOTER */
     footer {
       background: var(--primary-blue); color: white;
-      text-align: center; padding: 60px 20px; border-radius: 50px 50px 0 0;
+      text-align: center; padding: 50px 20px; border-radius: 40px 40px 0 0;
     }
 
+    /* 6. RESPONSIVE (MOBILE) */
     @media (max-width: 992px) {
-      body { padding-left: 0; }
-      body.sidebar-open .sidebar { transform: translateX(0); }
+      .menu-toggle { display: block; }
+      
+      .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: auto;
+        background: var(--bg-white);
+        flex-direction: column;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        transition: 0.4s;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-menu.open { left: 0; }
+
+      .nav-link { width: 100%; text-align: center; padding: 15px; }
+
+      .hero h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="controls">
-    <button class="btn-action" onclick="toggleSidebar()"><i class="fas fa-bars-staggered"></i></button>
-    <button class="btn-action" onclick="toggleDarkMode()"><i class="fas fa-moon" id="themeIcon"></i></button>
-  </div>
+  <header class="navbar">
+    <a href="#" class="nav-logo-group">
+      <img src="Panti.png" alt="Logo" />
+      <span>DARUL MUTTAQIN</span>
+    </a>
 
-  <nav class="sidebar">
-    <div class="nav-header">
-      <img src="Panti.png" alt="Logo" class="nav-logo" />
-      <div class="nav-title">DARUL MUTTAQIN</div>
+    <nav class="nav-menu" id="navMenu">
+      <a href="index.html" class="nav-link active">BERANDA</a>
+      <a href="kontak.html" class="nav-link">HUBUNGI KAMI</a>
+      <a href="Galeri.html" class="nav-link">GALERI</a>
+      <a href="Syarat.html" class="nav-link">PENDAFTARAN</a>
+      <button class="btn-mode" onclick="toggleDarkMode()">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+    </nav>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <i class="fas fa-bars" id="menuIcon"></i>
     </div>
-    <div class="sidebar-menu">
-      <a href="index.html" class="active"><i class="fas fa-house-chimney"></i> BERANDA</a>
-      <a href="kontak.html"><i class="fas fa-envelope-open-text"></i> HUBUNGI KAMI</a>
-      <a href="Galeri.html"><i class="fas fa-images"></i> GALERI FOTO</a>
-      <a href="Syarat.html"><i class="fas fa-file-signature"></i> PENDAFTARAN</a>
-    </div>
-  </nav>
+  </header>
 
   <section class="hero">
-    <h1>Panti Asuhan Darul Muttaqin Pasuruan </h1>
-    <p>Mari bergabung memberikan kebahagiaan dan pendidikan yang layak bagi putra-putri asuh kami. Setiap dukungan Anda adalah senyuman bagi mereka</p>
+    <h1>Panti Asuhan Darul Muttaqin</h1>
+    <p>Memberikan kasih sayang dan pendidikan terbaik untuk masa depan anak bangsa yang mandiri dan berakhlak mulia.</p>
   </section>
 
   <div class="galeri-container">
-    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px;">Aktivitas Terbaru</h2>
+    <h2 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px;">Aktivitas Kami</h2>
     <div class="carousel-track">
-      <img src="1.jpeg" alt="Kegiatan" /><img src="2.jpeg" alt="Kegiatan" />
-      <img src="3.jpeg" alt="Kegiatan" /><img src="4.jpeg" alt="Kegiatan" />
-      <img src="5.jpeg" alt="Kegiatan" /><img src="6.jpeg" alt="Kegiatan" />
-
-      <img src="1.jpeg" alt="Kegiatan" /><img src="2.jpeg" alt="Kegiatan" />
-      <img src="3.jpeg" alt="Kegiatan" /><img src="4.jpeg" alt="Kegiatan" />
-      <img src="5.jpeg" alt="Kegiatan" /><img src="6.jpeg" alt="Kegiatan" />
+      <img src="1.jpeg" alt="1" /><img src="2.jpeg" alt="2" />
+      <img src="3.jpeg" alt="3" /><img src="4.jpeg" alt="4" />
+      <img src="5.jpeg" alt="5" /><img src="6.jpeg" alt="6" />
+      <img src="1.jpeg" alt="1" /><img src="2.jpeg" alt="2" />
+      <img src="3.jpeg" alt="3" /><img src="4.jpeg" alt="4" />
+      <img src="5.jpeg" alt="5" /><img src="6.jpeg" alt="6" />
     </div>
   </div>
 
   <footer>
-    <div style="font-weight: 800; font-size: 1.5rem; margin-bottom: 10px;">DARUL MUTTAQIN</div>
+    <div style="font-weight: 800; font-size: 1.4rem; margin-bottom: 20px;">DARUL MUTTAQIN PASURUAN</div>
     <div class="social-links" style="margin-bottom: 20px;">
       <a href="https://instagram.com/pa_darulmuttaqin" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
       <a href="https://wa.me/6282245185893" style="color: white; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-whatsapp"></i></a>
     </div>
-    <p style="opacity: 0.6; font-size: 13px;">&copy; 2026 Panti Asuhan Darul Muttaqin. All Rights Reserved.</p>
+    <p style="opacity: 0.6; font-size: 12px;">&copy; 2026 Yayasan Darul Muttaqin. All Rights Reserved.</p>
   </footer>
 
   <script>
-    function toggleSidebar() {
-      document.body.classList.toggle('sidebar-closed');
-      if (window.innerWidth <= 992) {
-        document.body.classList.toggle('sidebar-open');
+    // Fungsi buka/tutup menu di HP
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      const icon = document.getElementById('menuIcon');
+      menu.classList.toggle('open');
+      
+      if(menu.classList.contains('open')) {
+        icon.classList.replace('fa-bars', 'fa-times');
+      } else {
+        icon.classList.replace('fa-times', 'fa-bars');
       }
     }
 
+    // Fungsi Dark Mode
     function toggleDarkMode() {
       const body = document.body;
       const icon = document.getElementById('themeIcon');
