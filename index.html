@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panti Asuhan Darul Muttaqin - Fresh Blue Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* 1. VARIABEL WARNA BIRU CERAH & PUTIH */
+    :root {
+      --primary-blue: #3b82f6;    /* Biru Cerah Utana */
+      --light-blue: #60a5fa;      /* Biru Muda */
+      --sky-blue: #eef2ff;        /* Latar Biru Sangat Pucat */
+      --bg-white: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --sidebar-w: 280px;
+      --border: #e2e8f0;
+    }
+
+    /* DARK MODE ADJUSTMENT (Tetap Biru Cerah) */
+    body.dark-mode {
+      --bg-white: #0f172a;
+      --sky-blue: #020617;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--sky-blue);
+      color: var(--text-main);
+      padding-left: var(--sidebar-w);
+      transition: all 0.4s ease;
+    }
+
+    body.sidebar-closed { padding-left: 0; }
+
+    /* 2. SIDEBAR BIRU CERAH */
+    .sidebar {
+      width: var(--sidebar-w);
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background: var(--bg-white);
+      padding: 40px 0;
+      z-index: 1000;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+    }
+
+    body.sidebar-closed .sidebar { transform: translateX(-100%); }
+
+    .nav-header { text-align: center; margin-bottom: 40px; padding: 0 20px; }
+    .nav-logo { width: 100px; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(59, 130, 246, 0.2)); }
+    .nav-title { font-size: 0.9rem; font-weight: 800; letter-spacing: 1px; color: var(--primary-blue); }
+
+    .sidebar-menu { display: flex; flex-direction: column; flex-grow: 1; }
+    .sidebar-menu a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: 0.3s;
+    }
+
+    .sidebar-menu a i { width: 20px; text-align: center; font-size: 1.1rem; color: var(--primary-blue); }
+    
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      color: var(--primary-blue);
+      background: #eff6ff;
+      box-shadow: inset 4px 0 0 var(--primary-blue);
+    }
+
+    /* 3. FLOATING CONTROLS */
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      transition: 0.3s;
+    }
+
+    .btn-action:hover { transform: scale(1.05); background: var(--light-blue); }
+
+    /* 4. MAIN CONTENT AREA */
+    .top-strip {
+      background: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .hero {
+      padding: 100px 8% 120px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.85), rgba(96, 165, 250, 0.7)), url('bg-panti.jpg') center/cover;
+      color: white;
+      border-radius: 0 0 50px 50px;
+    }
+
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; }
+    .hero p { max-width: 750px; margin: 0 auto 40px; font-size: 1.1rem; opacity: 0.95; line-height: 1.8; }
+
+    .btn-cta {
+      padding: 18px 45px;
+      background: white;
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 50px;
+      display: inline-block;
+      transition: 0.3s;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+
+    /* 5. DASHBOARD STATS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 0 8% 80px;
+      margin-top: -60px;
+    }
+
+    .card {
+      background: var(--bg-white);
+      padding: 45px 30px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.05);
+      border: 1px solid var(--border);
+      transition: 0.3s;
+    }
+
+    .card:hover { transform: translateY(-10px); border-color: var(--primary-blue); }
+    .card h3 { font-size: 3rem; color: var(--primary-blue); margin-bottom: 10px; font-weight: 800; }
+    .card p { color: var(--text-muted); font-weight: 600; margin: 0; }
+
+    /* 6. GALERI */
+    .galeri-title { text-align: center; margin: 40px 0 10px; font-weight: 800; font-size: 2.2rem; color: var(--primary-blue); }
+    
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      padding: 40px 20px;
+      animation: scroll 45s linear infinite;
+    }
+
+    .carousel-track img {
+      width: 350px; height: 240px; object-fit: cover;
+      border-radius: 20px; border: 4px solid var(--bg-white);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* 7. FOOTER FRESH BLUE */
+    footer {
+      background: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+      border-radius: 50px 50px 0 0;
+    }
+
+    .social-links { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
+    .social-links a {
+      width: 50px; height: 50px; background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 15px; color: white; text-decoration: none; font-size: 1.3rem; transition: 0.3s;
+    }
+    .social-links a:hover { background: white; color: var(--primary-blue); transform: translateY(-5px); }
+
+    @media (max-width: 992px) {
+      body { padding-left: 0; }
+      body.sidebar-open .sidebar { transform: translateX(0); }
+      .hero h1 { font-size: 2.4rem; }
+      .stats-grid { padding: 0 5% 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button class="btn-action" onclick="toggleSidebar()"><i class="fas fa-bars-staggered"></i></button>
+    <button class="btn-action" onclick="toggleDarkMode()"><i class="fas fa-moon" id="themeIcon"></i></button>
+  </div>
+
+  <nav class="sidebar">
+    <div class="nav-header">
+      <img src="Panti.png" alt="Logo Panti" class="nav-logo" />
+      <div class="nav-title">DARUL MUTTAQIN</div>
+    </div>
+    <div class="sidebar-menu">
+      <a href="#" class="active"><i class="fas fa-house-chimney"></i> BERANDA</a>
+      <a href="kontak.html"><i class="fas fa-envelope-open-text"></i> HUBUNGI KAMI</a>
+      <a href="Galeri.html"><i class="fas fa-images"></i> GALERI FOTO</a>
+      <a href="Syarat.html"><i class="fas fa-file-signature"></i> PENDAFTARAN</a>
+    </div>
+  </nav>
+
+  <div class="top-strip">PANTI ASUHAN DARUL MUTTAQIN PASURUAN</div>
+
+  <section class="hero">
+    <h1>Masa Depan Cerah <br> Dimulai dari Sini</h1>
+    <p>Mari bergabung memberikan kebahagiaan dan pendidikan yang layak bagi putra-putri asuh kami. Setiap dukungan Anda adalah senyuman bagi mereka.</p>
+    <a href="Syarat.html" class="btn-cta">Mulai Pendaftaran</a>
+  </section>
+
+  <section class="stats-grid">
+    <div class="card">
+      <h3>50+</h3>
+      <p>Anak Asuh Berbakat</p>
+    </div>
+    <div class="card">
+      <h3>100+</h3>
+      <p>Donatur Dermawan</p>
+    </div>
+    <div class="card">
+      <h3>20+</h3>
+      <p>Kegiatan Rutin</p>
+    </div>
+  </section>
+
+  <h2 class="galeri-title">Aktivitas Kami</h2>
+  
+  <div style="overflow: hidden;">
+    <div class="carousel-track">
+      <img src="1.jpeg" alt="Foto 1" /><img src="2.jpeg" alt="Foto 2" />
+      <img src="5.jpeg" alt="Foto 3" /><img src="6.jpeg" alt="Foto 4" />
+      <img src="4.jpeg" alt="Foto 5" /><img src="3.jpeg" alt="Foto 6" />
+      <img src="1.jpeg" alt="Foto 1" /><img src="2.jpeg" alt="Foto 2" /><img src="5.jpeg" alt="Foto 3" />
+    </div>
+  </div>
+
+  <footer>
+    <div style="font-weight: 800; font-size: 1.8rem; margin-bottom: 5px;">DARUL MUTTAQIN</div>
+    <p style="opacity: 0.8;">Membina Harapan, Menyinari Masa Depan.</p>
+    <div class="social-links">
+      <a href="https://instagram.com/pa_darulmuttaqin" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/6282245185893" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p style="margin-top: 30px; font-size: 13px; opacity: 0.5;">&copy; 2026 Panti Asuhan Darul Muttaqin. Semua hak cipta dilindungi.</p>
+  </footer>
+
+  <script>
+    function toggleSidebar() {
+      document.body.classList.toggle('sidebar-closed');
+      if (window.innerWidth <= 992) {
+        document.body.classList.toggle('sidebar-open');
+      }
+    }
+
+    function toggleDarkMode() {
+      const body = document.body;
+      const icon = document.getElementById('themeIcon');
+      body.classList.toggle('dark-mode');
+      
+      if(body.classList.contains('dark-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+    }
+  </script>
+</body>
+</html>
